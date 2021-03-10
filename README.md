@@ -80,6 +80,23 @@ Follow this short video for creating your application:
 
 ### Step 8 - Marvel at your application running!
 
+If you've edited things correctly then you should be able to see running pods when you do:
+
+```
+kubectl get pods
+```
+
+And you should see something similar to this:
+
+```
+NAME                                  READY   STATUS    RESTARTS   AGE
+devops-bookstore-api-b4d85f9c-4x2mw   1/1     Running   0          100s
+devops-bookstore-api-b4d85f9c-b8ks6   1/1     Running   0          100s
+devops-bookstore-api-b4d85f9c-jcndf   1/1     Running   0          100s
+```
+
+TODO: Show service publicly
+
 ### Step 9 - Update your code, build the docker image and push to the registry
 
 Lets pretend we've got our Dev hat on.

@@ -32,7 +32,7 @@ Within the **values.yaml** file you'll see a value for the repository. You shoul
 
 Examples of what it might look like:
 
-On GCP it would look something like:  eu.gcr.io/some-project-id/devops-bookstore-api
+On GCP it would look something like:  **eu.gcr.io/some-project-id/devops-bookstore-api**
 
 On AWS it would look something like:  
 

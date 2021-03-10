@@ -40,12 +40,6 @@ It will ask you for the username and password.
 **Password:** (As per what you generated in step 1)
 
 
-
-
-Re-provision their cluster from a branch, this time with a container registry
-
-Build their image and push to their container registry
-
 Manually deploy their application to the cluster by editing the deployment.yaml
 
 But what is problem? It was manual, it wasn;t observed, we can't easily see history.

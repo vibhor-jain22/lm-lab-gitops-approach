@@ -95,7 +95,25 @@ devops-bookstore-api-b4d85f9c-b8ks6   1/1     Running   0          100s
 devops-bookstore-api-b4d85f9c-jcndf   1/1     Running   0          100s
 ```
 
-TODO: Show service publicly
+In fact, because we made the Kubernetes service of type **LoadBalancer** you should even be able to see it publicly
+
+Have a look at your **services**
+
+```
+kubectl get services
+```
+
+You should see something like this:
+
+```
+NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)          AGE
+devops-bookstore-api-service   LoadBalancer   10.147.241.171   35.246.32.61   5000:31102/TCP   6m41s
+kubernetes                     ClusterIP      10.147.240.1     <none>         443/TCP          7h31m
+```
+
+Notice that **EXTERNAL-IP** - grab its address and go to it in the browser, using the example above I would go to:
+
+[http://35.246.32.61:5000/books](http://35.246.32.61:5000/books)
 
 ### Step 9 - Update your code, build the docker image and push to the registry
 

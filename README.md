@@ -8,9 +8,43 @@
 
 * You should fork this repository so that you can edit, commit and push back to your own repository
 
-### Step 1 - Grab the ArgoCD password
+### Step 1 - Fork this repository
 
-This is also covered in the provisioning guide so please ignore if you've already done this
+Fork this repository to your own GitHub account. 
+
+We fork the repository so that you can edit some of the code and push back your changes.
+
+### Step 2 - Explore the devops-bookstore-api Helm chart
+
+The [devops-bookstore-api](./devops-bookstore-api) directory is set up as a [Helm chart](https://helm.sh/docs/) for deploying the bookstore API.
+
+You'll see the following files:
+
+**Chart.yaml** This file defines our Helm chart including the name, chart version and application version.
+
+**values.yaml** This file defines all the variables that are passed to our Helm chart. They essentially configure what is deployed and how it is deployed. We'll be editing this shortly.
+
+**templates** This directory contains the Kubernetes YAML files that make up this chart. It bundles together the service, deployment and anything else needed.
+
+### Step 3 - Update the values.yaml and push
+
+Within the **values.yaml** file you'll see a value for the repository. You should update this to be that of the Docker image you pushed.
+
+Examples of what it might look like:
+
+On GCP it would look something like:  eu.gcr.io/some-project-id/devops-bookstore-api
+
+On AWS it would look something like:  
+
+On Azure it would look something like:
+
+Once you have made the changes, commit them and push back to your repository.
+
+### Step 4 - Grab the ArgoCD password
+
+Now the exciting part - lets get your container deployed!
+
+Firstly we need to log in to the ArgoCD tool. This is also covered in the provisioning guide so please ignore if you've already done this
 
 By default, ArgoCD generates a password for you. To extract this run the following command:
 
@@ -18,9 +52,9 @@ By default, ArgoCD generates a password for you. To extract this run the followi
 kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
 ```
 
-### Step 2 - Port forwarding into the ArgoCD dashboard
+### Step 5 - Port forwarding into the ArgoCD dashboard
 
-We can use kubectl to port forward requests from our machine into the cluster. 
+We can use `kubectl` to port forward requests from our machine into the cluster. 
 
 This is a fairly common technique for viewing a web application on the cluster that you do not wish to publicly expose.
 
@@ -32,43 +66,76 @@ kubectl port-forward svc/argocd-server -n argocd 9000:443
 
 Then you should be able to visit [http://localhost:9000](http://localhost:8080). It will likely tell you that the certificate cannot be verified. This is because you haven't provisioned a full SSL certificate. You can ignore this warning and follow the instructions to "Visit the site anyway"
 
-### Step 3 - Log in to the dashboard
+### Step 6 - Log in to the dashboard
 
 It will ask you for the username and password.
 
 **Username:** admin
+
 **Password:** (As per what you generated in step 1)
 
+### Step 7 - Create your application 
 
-Manually deploy their application to the cluster by editing the deployment.yaml
+Follow this short video for creating your application:
 
-But what is problem? It was manual, it wasn;t observed, we can't easily see history.
+### Step 8 - Marvel at your application running!
 
-Whats good at storing changes of what happened and when?
+### Step 9 - Update your code, build the docker image and push to the registry
 
-Enter GitOps - version control for when operations do something
+Lets pretend we've got our Dev hat on.
 
-Create a repository for your operations config
+Go back to the python app and update the code to include a new book.
 
-Repository will be a Helm chart based repo
-
-Change the image address to your container registry address
-
-Get it deploying your Flask API
-
-Build a new image and push to your container registry
-
-Update your ops repo and change tag
-
-Sync with ArgoCD (out of date)
-
-Apply changes
-
-
-Teardown ArgoCD
+Build the docker image remembering to tag with with a new version such as:
 
 ```
-kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+docker build -t devops-bookstore-api:1.1 .
+```
+
+And then go back over the steps you did before to push that new version up to your cloud (AWS, GCP or Azure) container registry. Don't forget to make sure you use the right tags.
+
+You should now have a new version up in your container registry.
+
+_Spoiler alert_: This develop, test, build, push cycle is what we'll be covering in session five where we set up a CI/CD pipeline.
+
+### Step 10 - Update the GitOps repo and push to Git
+
+So you've done a bit of that dev stuff. Now put your ops person hat on.
+
+Dev have said there is a new release. 
+
+Working in a GitOps manner, everything is stored in Git so we just need to update this repository to trigger Argo to do our next deploy.
+
+Update the **Chart.yaml** and change the **appVersion** to be the new version such as **1.1**. 
+
+Commit and push that change.
+
+### Step 11 - Observe the change in Argo
+
+After a few moments, ArgoCD will observe that it is now **Out of Sync**. If you get impatient just click **Refresh**
+
+Essentially that is ArgoCD saying there seems to be a new version of that deployment when comparing to GitHub.
+
+If you click **Sync** it will go ahead and update your application in turn deploying the latest version of the app.
+
+### Step 12 - Relax and praise yourself
+
+Well done!!! You're now fully GitOps
+
+Marvel at what you've created! Let the world know, take those screenshots of Argo and share on social media! 
+
+Yeah damn right you're proud - great work!
+
+### Step 13 - Saving costs!
+
+Once the dust has settled, you've taken your screenshots to share with the world then its probably time to destroy your cluster and save on costs.
+
+Log in to the ArgoCD dashboard and click **Delete** on the application to remove all the deployments
+
+Then go back to your provisioning directory (where all the terraform stuff was) and run:
+
+```
+terraform destroy
 ```
 
 

@@ -4,7 +4,9 @@
 
 ### Pre-requisites
 
-Kubernetes cluster to be up and running and ArgoCD deployed.
+* Kubernetes cluster to be up and running and ArgoCD deployed.
+
+* You should fork this repository so that you can edit, commit and push back to your own repository
 
 ### Step 1 - Grab the ArgoCD password
 

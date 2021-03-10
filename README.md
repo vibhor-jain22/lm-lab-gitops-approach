@@ -4,26 +4,11 @@
 
 ### Pre-requisites
 
-Kubernetes cluster to be up and running
+Kubernetes cluster to be up and running and ArgoCD deployed.
 
-### Step 1 - Deploy ArgoCD
+### Step 1 - Grab the ArgoCD password
 
-```
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-```
-
-Wait for pods to be created, keep checking the status:
-
-```
-kubectl get pods -n argocd
-```
-
-Once they are all running move on to step 2.
-
-### Step 2 - Grab the ArgoCD password
-
-You'll need the ArgoCD password for navigating into the dashboard.
+This is also covered in the provisioning guide so please ignore if you've already done this
 
 By default, ArgoCD generates a password for you. To extract this run the following command:
 
@@ -31,7 +16,7 @@ By default, ArgoCD generates a password for you. To extract this run the followi
 kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
 ```
 
-### Step 3 - Port forwarding into the ArgoCD dashboard
+### Step 2 - Port forwarding into the ArgoCD dashboard
 
 We can use kubectl to port forward requests from our machine into the cluster. 
 
@@ -40,15 +25,20 @@ This is a fairly common technique for viewing a web application on the cluster t
 To port forward local requests for port 8080 into Argo running on port 443 you can run:
 
 ```
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl port-forward svc/argocd-server -n argocd 9000:443
 ```
 
-Then you should be able to visit [http://localhost:8080](http://localhost:8080). It will likely tell you that the certificate cannot be verified. This is because you haven't provisioned a full SSL certificate. You can ignore this warning and follow the instructions to "Visit the site anyway"
+Then you should be able to visit [http://localhost:9000](http://localhost:8080). It will likely tell you that the certificate cannot be verified. This is because you haven't provisioned a full SSL certificate. You can ignore this warning and follow the instructions to "Visit the site anyway"
 
-### Step 4 - Creating an application via UI
+### Step 3 - Log in to the dashboard
+
+It will ask you for the username and password.
+
+**Username:** admin
+**Password:** (As per what you generated in step 1)
 
 
-Plan 
+
 
 Re-provision their cluster from a branch, this time with a container registry
 

@@ -78,6 +78,8 @@ It will ask you for the username and password.
 
 Follow this short video for creating your application:
 
+[Creating your application in ArgoCD](https://storage.googleapis.com/devops-up-skill/session-004-argocd-app-creation.mp4)
+
 ### Step 8 - Marvel at your application running!
 
 If you've edited things correctly then you should be able to see running pods when you do:

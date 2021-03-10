@@ -119,7 +119,7 @@ Notice that **EXTERNAL-IP** - grab its address and go to it in the browser, usin
 
 Lets pretend we've got our Dev hat on.
 
-Go back to the python app and update the code to include a new book.
+Go back to the codebase for the python app and update the code to include a new book.
 
 Build the docker image remembering to tag with with a new version such as:
 

@@ -72,7 +72,7 @@ It will ask you for the username and password.
 
 **Username:** admin
 
-**Password:** (As per what you generated in step 1)
+**Password:** (As per what you generated in step 4)
 
 ### Step 7 - Create your application 
 

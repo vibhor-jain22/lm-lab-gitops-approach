@@ -117,6 +117,10 @@ Notice that **EXTERNAL-IP** - grab its address and go to it in the browser, usin
 
 [http://35.246.32.61:5000/books](http://35.246.32.61:5000/books)
 
+**NOTE** On AWS it might show a Load Balancer DNS address for the EXTERNAL-IP. You can visit it just the same such as:
+
+http://aeecab1189e7a4bde9834bc71baf6593-1118953692.eu-west-2.elb.amazonaws.com:5000/books
+
 ### Step 9 - Update your code, build the docker image and push to the registry
 
 Lets pretend we've got our Dev hat on.

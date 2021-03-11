@@ -34,7 +34,7 @@ Examples of what it might look like:
 
 On GCP it would look something like:  **eu.gcr.io/some-project-id/devops-bookstore-api**
 
-On AWS it would look something like:  
+On AWS it would look something like:  **AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/devops-bookstore-api**
 
 On Azure it would look something like:
 

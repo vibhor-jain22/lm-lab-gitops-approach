@@ -123,7 +123,7 @@ http://aeecab1189e7a4bde9834bc71baf6593-1118953692.eu-west-2.elb.amazonaws.com:5
 
 ### Step 9 - Update your code, build the docker image and push to the registry
 
-Lets pretend we've got our Dev hat on.
+Let us pretend we've got our Dev hat on.
 
 Go back to the codebase for the python app and update the code to include a new book.
 

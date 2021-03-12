@@ -173,7 +173,7 @@ Once the dust has settled, you've taken your screenshots to share with the world
 
 **Important:** Log in to the ArgoCD dashboard and click **Delete** on the application to remove all the deployments. This is because they might have in turn provisioned load balancers (that weren't terraform managed).
 
-Once you have deleted your Argo deployments you can then remove Argo from your cluster:
+Once you have deleted your the applications from Argo you can then remove Argo itself from your cluster:
 
 ```
 kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml

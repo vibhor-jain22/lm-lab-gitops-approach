@@ -171,9 +171,15 @@ Yeah damn right you're proud - great work!
 
 Once the dust has settled, you've taken your screenshots to share with the world then its probably time to destroy your cluster and save on costs.
 
-Log in to the ArgoCD dashboard and click **Delete** on the application to remove all the deployments
+**Important:** Log in to the ArgoCD dashboard and click **Delete** on the application to remove all the deployments. This is because they might have in turn provisioned load balancers (that weren't terraform managed).
 
-Then go back to your provisioning directory (where all the terraform stuff was) and run:
+Once you have deleted your Argo deployments you can then remove Argo from your cluster:
+
+```
+kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+And then finally go back to your provisioning directory (where all the terraform stuff was) and run:
 
 ```
 terraform destroy

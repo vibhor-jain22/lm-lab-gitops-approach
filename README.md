@@ -42,15 +42,23 @@ Once you have made the changes, commit them and push back to your repository.
 
 ### Step 4 - Grab the ArgoCD password
 
-Now the exciting part - lets get your container deployed!
+Now the exciting part - lets get your container deployed! 🚀
 
-Firstly we need to log in to the ArgoCD tool. This is also covered in the provisioning guide so please ignore if you've already done this
+Firstly we need to log in to the ArgoCD tool. This is also covered in the provisioning guide so please ignore if you've already done this.
 
 By default, ArgoCD generates a password for you. To extract this run the following command:
 
 ```
 kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
 ```
+
+If that password doesn't work try running this command to obtain the password (they changed it between version 1.8 and 1.9):
+
+```
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+(If you see a % sign as the last character that is just signalling the end of line and is NOT part of the password)
 
 ### Step 5 - Port forwarding into the ArgoCD dashboard
 

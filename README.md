@@ -150,8 +150,11 @@ Go back to the codebase for the python app and update the code to include a new 
 
 Build the docker image remembering to tag with with a new version such as:
 
+> ⚠️ Note: In the command below we enforce the linux architecture
+> By default the docker engine will utilise the architecture present on the building system. If you are running a Mac then your container won't work when it comes to running on the Kubernetes environment which is a linux architecture.
+
 ```
-docker build -t devops-bookstore-api:1.1 .
+docker build --platform linux/amd64 -t devops-bookstore-api:1.1 .
 ```
 
 And then go back over the steps you did before to push that new version up to your cloud (AWS, GCP or Azure) container registry. Don't forget to make sure you use the right tags.

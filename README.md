@@ -203,7 +203,7 @@ Once you have deleted your the applications from Argo you can then remove Argo i
 kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-And then finally go back to your provisioning directory (where all the terraform stuff was) and run:
+And then finally go **back to your provisioning directory** (where all the terraform stuff was) and run:
 
 ```
 terraform destroy

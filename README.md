@@ -49,30 +49,43 @@ Firstly we need to log in to the ArgoCD tool. This is also covered in the provis
 By default, ArgoCD generates a password for you. To extract this run the following command:
 
 ```
-kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
-```
-
-If that password doesn't work try running this command to obtain the password (they changed it between version 1.8 and 1.9):
-
-```
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
 (If you see a % sign as the last character that is just signalling the end of line and is NOT part of the password)
 
+**Windows Users**
+
+Windows users running Powershell will get an error when running the above command to get the ArgoCD password due to Powershell having to decode using base64 in a different way.
+
+To get around this Windows users will need to run this command to get the string into a variable
+
+```
+$argocdpass = kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"
+```
+
+Then just type the variable name to get the contents and add that into the command below to get your ArgoCD password:
+
+```
+[Text.Encoding]::Utf8.GetString([Convert]::FromBase64String('**argocdpass output in here**'))
+```
+
 ### Step 5 - Port forwarding into the ArgoCD dashboard
+
+> ⚠️ Note
+> If you are still port forwarding then you don't need to do this step. You can check your port forwarding by going to [http://localhost:9000](http://localhost:9000) and seeing if Argo loads.
 
 We can use `kubectl` to port forward requests from our machine into the cluster. 
 
 This is a fairly common technique for viewing a web application on the cluster that you do not wish to publicly expose.
 
-To port forward local requests for port 8080 into Argo running on port 443 you can run:
+To port forward local requests for port 9000 into Argo running on port 443 you can run:
 
 ```
 kubectl port-forward svc/argocd-server -n argocd 9000:443
 ```
 
-Then you should be able to visit [http://localhost:9000](http://localhost:8080). It will likely tell you that the certificate cannot be verified. This is because you haven't provisioned a full SSL certificate. You can ignore this warning and follow the instructions to "Visit the site anyway"
+Then you should be able to visit [http://localhost:9000](http://localhost:9000). It will likely tell you that the certificate cannot be verified. This is because you haven't provisioned a full SSL certificate. You can ignore this warning and follow the instructions to "Visit the site anyway"
 
 ### Step 6 - Log in to the dashboard
 

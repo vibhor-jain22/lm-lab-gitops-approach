@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: devops-bookstore-api-service
+  labels:
+    app: devops-bookstore-api
 spec:
   type: LoadBalancer
   ports:
